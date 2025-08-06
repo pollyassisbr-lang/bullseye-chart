@@ -9,71 +9,36 @@
   <div id="container" style="width: 100%; height: 700px;"></div>
 
   <script>
-    // Inline mock data
     const data = [
-      {
-        "x": "Evoximab", "value": 2, "name": "Evoximab", "group": "Biological",
-        "custom": {
-          "Company": "AstraNova Biotech", "Phase": "Phase 1", "Target": "PD-1",
-          "Route": "IV", "Hyperlink": "https://example.com/evoximab"
-        }
-      },
-      {
-        "x": "Tazirex", "value": 3, "name": "Tazirex", "group": "Chemical",
-        "custom": {
-          "Company": "HelixThera", "Phase": "Phase 2", "Target": "HER2",
-          "Route": "Oral", "Hyperlink": "https://example.com/tazirex"
-        }
-      },
-      {
-        "x": "Virebloc", "value": 1, "name": "Virebloc", "group": "Drug Conjugate",
-        "custom": {
-          "Company": "MedPharmaceutics", "Phase": "Preclinical", "Target": "HBV Polymerase",
-          "Route": "Subcutaneous", "Hyperlink": "https://example.com/virebloc"
-        }
-      },
-      {
-        "x": "Neuramol", "value": 4, "name": "Neuramol", "group": "Chemical",
-        "custom": {
-          "Company": "Synthera Genomics", "Phase": "Phase 3", "Target": "BACE1",
-          "Route": "Oral", "Hyperlink": "https://example.com/neuramol"
-        }
-      },
-      {
-        "x": "Immutrol", "value": 5, "name": "Immutrol", "group": "Biological",
-        "custom": {
-          "Company": "BioCura", "Phase": "NDA/BLA", "Target": "IL-6 Receptor",
-          "Route": "IV", "Hyperlink": "https://example.com/immutrol"
-        }
-      },
-      {
-        "x": "Oncomir", "value": 6, "name": "Oncomir", "group": "Unknown",
-        "custom": {
-          "Company": "NovoCore", "Phase": "Marketed", "Target": "KRAS G12C",
-          "Route": "Inhaled", "Hyperlink": "https://example.com/oncomir"
-        }
-      }
+      { x: 30, value: 2, name: "Evoximab", group: "Biological", custom: { Company: "AstraNova Biotech", Phase: "Phase 1", Target: "PD-1", Route: "IV", Hyperlink: "https://example.com/evoximab" }},
+      { x: 90, value: 3, name: "Tazirex", group: "Chemical", custom: { Company: "HelixThera", Phase: "Phase 2", Target: "HER2", Route: "Oral", Hyperlink: "https://example.com/tazirex" }},
+      { x: 150, value: 1, name: "Virebloc", group: "Drug Conjugate", custom: { Company: "MedPharmaceutics", Phase: "Preclinical", Target: "HBV Polymerase", Route: "Subcutaneous", Hyperlink: "https://example.com/virebloc" }},
+      { x: 210, value: 4, name: "Neuramol", group: "Chemical", custom: { Company: "Synthera Genomics", Phase: "Phase 3", Target: "BACE1", Route: "Oral", Hyperlink: "https://example.com/neuramol" }},
+      { x: 270, value: 5, name: "Immutrol", group: "Biological", custom: { Company: "BioCura", Phase: "NDA/BLA", Target: "IL-6 Receptor", Route: "IV", Hyperlink: "https://example.com/immutrol" }},
+      { x: 330, value: 6, name: "Oncomir", group: "Unknown", custom: { Company: "NovoCore", Phase: "Marketed", Target: "KRAS G12C", Route: "Inhaled", Hyperlink: "https://example.com/oncomir" }}
     ];
 
     anychart.onDocumentReady(function () {
-      var chart = anychart.circularGauge();
+      var chart = anychart.polar();
 
-      chart.data(data);
+      var series = chart.marker(data);
 
       chart.title("Bullseye Drug Development Chart");
+      chart.xScale().mode("circular");
+      chart.yScale().minimum(0).maximum(6.5).ticks().interval(1);
 
-      chart.tooltip().format(function () {
+      series.name("Drugs");
+      series.tooltip().useHtml(true).format(function () {
         return (
-          "Drug: " + this.name + "\n" +
-          "Company: " + this.getData("custom").Company + "\n" +
-          "Phase: " + this.getData("custom").Phase + "\n" +
-          "Target: " + this.getData("custom").Target + "\n" +
-          "Route: " + this.getData("custom").Route + "\n" +
-          "Link: " + this.getData("custom").Hyperlink
+          "<b>Drug:</b> " + this.name + "<br>" +
+          "<b>Company:</b> " + this.getData("custom").Company + "<br>" +
+          "<b>Phase:</b> " + this.getData("custom").Phase + "<br>" +
+          "<b>Target:</b> " + this.getData("custom").Target + "<br>" +
+          "<b>Route:</b> " + this.getData("custom").Route + "<br>" +
+          "<b>Link:</b> <a href='" + this.getData("custom").Hyperlink + "' target='_blank'>Open</a>"
         );
       });
 
-      chart.palette(anychart.palettes.defaultPalette);
       chart.container("container");
       chart.draw();
     });
