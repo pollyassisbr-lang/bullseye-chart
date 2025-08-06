@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bullseye Drug Chart</title>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-bundle.min.js"></script>
+</head>
+<body>
+  <div id="container" style="width: 100%; height: 700px;"></div>
+
+  <script>
+    // Inline mock data
+    const data = [
+      {
+        "x": "Evoximab", "value": 2, "name": "Evoximab", "group": "Biological",
+        "custom": {
+          "Company": "AstraNova Biotech", "Phase": "Phase 1", "Target": "PD-1",
+          "Route": "IV", "Hyperlink": "https://example.com/evoximab"
+        }
+      },
+      {
+        "x": "Tazirex", "value": 3, "name": "Tazirex", "group": "Chemical",
+        "custom": {
+          "Company": "HelixThera", "Phase": "Phase 2", "Target": "HER2",
+          "Route": "Oral", "Hyperlink": "https://example.com/tazirex"
+        }
+      },
+      {
+        "x": "Virebloc", "value": 1, "name": "Virebloc", "group": "Drug Conjugate",
+        "custom": {
+          "Company": "MedPharmaceutics", "Phase": "Preclinical", "Target": "HBV Polymerase",
+          "Route": "Subcutaneous", "Hyperlink": "https://example.com/virebloc"
+        }
+      },
+      {
+        "x": "Neuramol", "value": 4, "name": "Neuramol", "group": "Chemical",
+        "custom": {
+          "Company": "Synthera Genomics", "Phase": "Phase 3", "Target": "BACE1",
+          "Route": "Oral", "Hyperlink": "https://example.com/neuramol"
+        }
+      },
+      {
+        "x": "Immutrol", "value": 5, "name": "Immutrol", "group": "Biological",
+        "custom": {
+          "Company": "BioCura", "Phase": "NDA/BLA", "Target": "IL-6 Receptor",
+          "Route": "IV", "Hyperlink": "https://example.com/immutrol"
+        }
+      },
+      {
+        "x": "Oncomir", "value": 6, "name": "Oncomir", "group": "Unknown",
+        "custom": {
+          "Company": "NovoCore", "Phase": "Marketed", "Target": "KRAS G12C",
+          "Route": "Inhaled", "Hyperlink": "https://example.com/oncomir"
+        }
+      }
+    ];
+
+    anychart.onDocumentReady(function () {
+      var chart = anychart.circularGauge();
+
+      chart.data(data);
+
+      chart.title("Bullseye Drug Development Chart");
+
+      chart.tooltip().format(function () {
+        return (
+          "Drug: " + this.name + "\n" +
+          "Company: " + this.getData("custom").Company + "\n" +
+          "Phase: " + this.getData("custom").Phase + "\n" +
+          "Target: " + this.getData("custom").Target + "\n" +
+          "Route: " + this.getData("custom").Route + "\n" +
+          "Link: " + this.getData("custom").Hyperlink
+        );
+      });
+
+      chart.palette(anychart.palettes.defaultPalette);
+      chart.container("container");
+      chart.draw();
+    });
+  </script>
+</body>
+</html>
